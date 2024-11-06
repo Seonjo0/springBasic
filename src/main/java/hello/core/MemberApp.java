@@ -8,10 +8,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class MemberApp {
     public static void main(String[] args) {
-//        AppConfig appConfig = new AppConfig();
-//        // appConfig가 주입.
-//        MemberService memberService = appConfig.memberService();
-
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
         MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
 
