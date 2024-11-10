@@ -5,6 +5,7 @@ import hello.core.member.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,4 +37,23 @@ public class SingletonTest {
         // same : 동일한지
         // eqaul : 동등한지
     }
+
+    @Test
+    @DisplayName("스프링 컨테이너와 싱글톤")
+    void springContainer(){
+//        AppConfig appConfig = new AppConfig();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        // 호출마다 객체를 생성
+        MemberService memberService = context.getBean("memberService", MemberService.class);
+        MemberService memberService1 = context.getBean("memberService", MemberService.class);
+
+        // 요청 마다 객체가 생성되어 메모리에 축적된다.
+        System.out.println("memberService = " + memberService);
+        System.out.println("memberService1 = " + memberService1);
+
+        // memberService != memberService1
+        assertThat(memberService).isSameAs(memberService1);
+    }
 }
+
+
